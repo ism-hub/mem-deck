@@ -1,7 +1,7 @@
 {
     "name": "Memory Deck",
     "short_name": "Mem-Deck",
-    "start_url": "/",
+    "start_url": "/mem-deck/",
     "orientation": "portrait",
     "icons": [
         {
