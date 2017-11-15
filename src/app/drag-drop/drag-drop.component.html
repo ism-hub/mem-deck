@@ -1,0 +1,11 @@
+
+<h1>Drag 'n Drop</h1>
+    <div #container
+         class="container"
+         (mousemove)="onMouseMove($event)">
+      <div #draggable appHighlight
+           class="draggable"
+           (mousedown)="onMouseButton($event)"
+           (mouseup)="onMouseButton($event)">
+      </div>
+    </div>

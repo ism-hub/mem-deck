@@ -1,0 +1,187 @@
+
+
+import {Directive, ElementRef, HostListener, Input, Renderer2, ViewChild, AfterContentInit, OnDestroy} from '@angular/core';
+
+@Directive({selector: '[appDragable]'})
+export class DragCropDirective implements AfterContentInit, OnDestroy {
+  isMouseDown = false;
+
+  /*@ViewChild('container')*/ private containerElement: any;
+ // private containerElement: any;
+  @Input() readonly containerId = 'container';
+  offsetWhenDragStarted: {offsetX: number, offsetY: number};
+  startTranslate: {X: number, Y: number};
+  containerPageRect: {top: number, left: number, width: number, height: number};
+  isDragging = false;
+  isDropped = false; // if we dragged and dropped to a correct place
+  originPos: {pageX: number, pageY: number};
+
+  ngAfterContentInit(): void {
+    this.containerElement = this.el.nativeElement.parentElement.closest('#' + this.containerId);
+ //   console.log('DragCropDirective ngAfterContentInit this.containerElement:');
+    this.containerPageRect = this.getCoords(this.containerElement);
+    const elemPos = this.getCoords(this.el.nativeElement);
+    this.originPos = {pageX: elemPos.left, pageY: elemPos.height};
+ //   console.log(this.containerPageRect);
+  }
+
+  constructor(private el: ElementRef, private renderer: Renderer2) {
+//    console.log('constructor DragCropDirective:');
+//    console.log(this.el.nativeElement);
+//    console.log(this.el.nativeElement.scrollTop);
+  }
+
+ // @HostListener('mouseleave') onMouseLeave() {
+ //   this.highlight('green');
+//  }
+
+  getMousePoseOffset(event): {transX: number, transY: number} {
+   // return {transX: event.pageX - this.offsetWhenDragStarted.offsetX - this.originPos.pageX, transY: event.pageY - this.offsetWhenDragStarted.offsetY - this.originPos.pageY};
+    return {transX: event.pageX - this.originPos.pageX, transY: event.pageY - this.originPos.pageY};
+  }
+
+ /* @HostListener('dragstart', ['$event']) onDragStart(event) {
+   // console.log(event);
+  //  console.log(this.el.nativeElement);
+    this.offsetWhenDragStarted = {offsetX: event.offsetX , offsetY: event.offsetY - this.el.nativeElement.getBoundingClientRect().height};
+    const trans = this.getMousePoseOffset(event);
+    this.startTranslate = {X: trans.transX, Y: trans.transY};
+//    console.log('dragstart');
+//    console.log(this.el.nativeElement);
+    this.isDragging = true;
+    this.isDropped = false;
+  }
+
+  @HostListener('drag', ['$event']) onDrag(event) {
+    if (!this.isDragging)
+      return;
+    // console.log(event.pageY);
+  //  const elemPos = this.getCoords(this.el.nativeElement);
+    //  console.log((elemPos.left - event.pageX) + ' ' + (elemPos.top - event.pageY));
+    const trans = this.getMousePoseOffset(event);
+ //   this.renderer.setStyle(this.el.nativeElement, 'transform', 'translate(' + trans.transX + 'px,' + trans.transY + 'px)');
+   // this.renderer.setStyle(this.el.nativeElement, 'left', event.pageX - this.offsetWhenDragStarted.offsetX + 'px');
+   // this.renderer.setStyle(this.el.nativeElement, 'top', event.pageY - this.offsetWhenDragStarted.offsetY + 'px');
+  }
+
+  @HostListener('dragover', ['$event']) onDragOver(event) {
+    if (!this.isDragging)
+      return;
+    console.log('dragover');
+     return event.preventDefault();
+    // is inside our container
+    if ((event.pageX > this.containerPageRect.left && event.pageX < this.containerPageRect.left + this.containerPageRect.width) &&
+        (event.pageY > this.containerPageRect.top && event.pageY < this.containerPageRect.top + this.containerPageRect.height) ) {
+      return event.preventDefault();
+    }
+  }
+
+  @HostListener('dragleave', ['$event']) onDragLeave(event) {
+    return event.preventDefault();
+ //   if (!this.isDragging)
+ //     return;
+ //  this.renderer.setStyle(this.el.nativeElement, 'left', this.startPosition.clientX - this.offsetWhenDragStarted.offsetX + 'px');
+ //  this.renderer.setStyle(this.el.nativeElement, 'top', this.startPosition.clientY - this.offsetWhenDragStarted.offsetY + 'px');
+//   console.log('onDragLeave');
+//   console.log(this.el.nativeElement);
+  }
+
+//  @HostListener('dragenter', ['$event']) onDragEnter(event) {
+ //   if (!this.isDragging)
+ //     return;
+//    console.log('onDragEnter22222222222222222222222222222222222222222');
+//    console.log(this.el.nativeElement);
+//    return event.preventDefault();
+//  }
+
+  @HostListener('drop', ['$event']) onDrop(event) {
+     if (!this.isDragging)
+      return;
+    const trans = this.getMousePoseOffset(event);
+     this.renderer.setStyle(this.el.nativeElement, 'transform', 'translate(' + trans.transX + 'px,' + trans.transY + 'px)');
+  //  console.log('drop');
+ //   console.log(this.el.nativeElement);
+    this.isDropped = true;
+    // this.renderer.setStyle(this.el.nativeElement, 'left', this.startPosition.clientX - this.offsetWhenDragStarted.offsetX + 'px');
+   // this.renderer.setStyle(this.el.nativeElement, 'top', this.startPosition.clientY - this.offsetWhenDragStarted.offsetY + 'px');
+  }
+
+  @HostListener('dragend', ['$event']) onDragEnd(event) {
+     if (!this.isDragging)
+      return;
+    this.isDragging = false;
+//    console.log('dragend');
+//    console.log(this.el.nativeElement);
+    if (this.isDropped)
+      return;
+    this.renderer.setStyle(this.el.nativeElement, 'transform', 'translate(' + this.startTranslate.X + 'px,' + this.startTranslate.Y + 'px)');
+  //  this.renderer.setStyle(this.el.nativeElement, 'left', this.startPosition.pageX - this.offsetWhenDragStarted.offsetX + 'px');
+  //  this.renderer.setStyle(this.el.nativeElement, 'top', this.startPosition.pageY - this.offsetWhenDragStarted.offsetY + 'px');
+    this.isDragging = false;
+ //   console.log(this.el.nativeElement);
+  }*/
+
+
+  getCoords(elem): { top: number, left: number, width: number, height: number} { // crossbrowser version
+    const box = elem.getBoundingClientRect();
+
+    const body = document.body;
+    const docEl = document.documentElement;
+
+    const scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+    const scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+
+    const clientTop = docEl.clientTop || body.clientTop || 0;
+    const clientLeft = docEl.clientLeft || body.clientLeft || 0;
+
+    const top  = box.top +  scrollTop - clientTop;
+    const left = box.left + scrollLeft - clientLeft;
+
+  //  return { top: Math.round(top), left: Math.round(left), width: Math.round(box.width), height: Math.round(box.height)};
+    return { top: top, left: left, width: box.width, height: box.height};
+}
+
+ // @HostListener('mouseenter') onMouseClick() {
+ //   this.highlight('yellow');
+ // }
+
+  mouseMoveFnc = (event) => this.onMouseMove(event);
+  registerContainersOnMouseMoveEvent(): void {
+    this.containerElement.addEventListener('mousemove', this.mouseMoveFnc);
+  }
+
+  unregisterContainersOnMouseMoveEvent(): void {
+    this.containerElement.removeEventListener('mousemove', this.mouseMoveFnc);
+  }
+
+  @HostListener('mousedown', ['$event']) onMouseDown(event) {
+    this.isDragging = true;
+    console.log(event);
+    this.registerContainersOnMouseMoveEvent();
+    this.offsetWhenDragStarted = {offsetX: event.pageX , offsetY: event.pageY - this.el.nativeElement.getBoundingClientRect().height}; 
+  }
+
+  onMouseMove(event: MouseEvent) {
+    if (! this.isDragging)
+      return;
+  //  console.log('onMouseMove');
+    if ((event.pageX > this.containerPageRect.left && event.pageX < this.containerPageRect.left + this.containerPageRect.width) &&
+        (event.pageY > this.containerPageRect.top && event.pageY < this.containerPageRect.top + this.containerPageRect.height) ) {
+      const trans = this.getMousePoseOffset(event);
+      this.renderer.setStyle(this.el.nativeElement, 'transform', 'translate(' + trans.transX + 'px,' + trans.transY + 'px)');
+    }
+  }
+
+  @HostListener('mouseup') onMouseClick() {
+    this.unregisterContainersOnMouseMoveEvent();
+    this.isDragging = false;
+  }
+
+  ngOnDestroy(): void {
+    this.unregisterContainersOnMouseMoveEvent();
+  }
+
+//  private highlight(color: string) {
+//    this.el.nativeElement.style.backgroundColor = color;
+//  }
+}

@@ -1,0 +1,8 @@
+
+<!-- div class="card" [style.background-image]='"/assets/svg-cards/10_of_clubs.svg"' appDragable [containerId]='"table"'>
+
+</div-->
+<div class="card" appDragable [containerId]='"table"' [style.background-image]="currentPicPath" [style.z-index]="card.z"
+ (mousedown)="onClick($event)" (mouseup)="onClick($event)" (locationChange)="onLocationChange($event)" [location] ="card.location">
+
+</div>
