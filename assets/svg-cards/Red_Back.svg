@@ -11,8 +11,8 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
-   width="223.22835"
-   height="311.81104"
+   width="167.0869141pt"
+   height="242.6669922pt"
    id="svg3775">
   <defs
      id="defs3777">
@@ -26,8 +26,8 @@
        patternTransform="matrix(-0.11059956,0.11059956,-0.11059956,-0.11059956,-254.02376,74.426221)" />
     <pattern
        patternUnits="userSpaceOnUse"
-       width="108.6184"
-       height="110.74085"
+       width="81.3011128312pt"
+       height="86.1840843838pt"
        patternTransform="translate(-254.02376,74.426221)"
        id="pattern13024-5">
       <path
@@ -135,8 +135,8 @@
        patternTransform="matrix(0.11006325,-0.11006325,0.11006325,0.11006325,-254.02376,74.426221)" />
     <pattern
        patternUnits="userSpaceOnUse"
-       width="108.6184"
-       height="110.74085"
+       width="81.3011128312pt"
+       height="86.1840843838pt"
        patternTransform="translate(-254.02376,74.426221)"
        id="pattern8463-7-486-8">
       <path
@@ -212,8 +212,8 @@
     </pattern>
     <pattern
        patternUnits="userSpaceOnUse"
-       width="108.6184"
-       height="110.74085"
+       width="81.3011128312pt"
+       height="86.1840843838pt"
        patternTransform="translate(-254.02376,74.426221)"
        id="pattern8463-7-486-8-2">
       <path
@@ -289,8 +289,8 @@
     </pattern>
     <pattern
        patternUnits="userSpaceOnUse"
-       width="16.771802"
-       height="17.115901"
+       width="12.5537309221pt"
+       height="13.3204527154pt"
        patternTransform="translate(127.76526,536.84923)"
        id="pattern3800">
       <g
@@ -391,8 +391,8 @@
        id="g15148"
        style="display:inline">
       <rect
-         width="222.22835"
-         height="310.81104"
+         width="166.338411886pt"
+         height="241.888742039pt"
          rx="10.629921"
          ry="10.629921"
          x="-550.44244"
@@ -400,16 +400,16 @@
          id="rect13068"
          style="fill:#ffffff;stroke:#000000;stroke-width:1;stroke-opacity:1" />
       <rect
-         width="197.05205"
-         height="286.64417"
+         width="147.493895608pt"
+         height="223.080871561pt"
          ry="0"
          x="-537.85431"
          y="502.58582"
          id="rect13070"
          style="fill:none;stroke:#d40000;stroke-width:4.95238304;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
       <rect
-         width="188.27672"
-         height="278.90585"
+         width="140.925541678pt"
+         height="217.058522772pt"
          x="-533.46661"
          y="506.45496"
          id="rect13072"
